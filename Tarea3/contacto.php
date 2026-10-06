@@ -1,3 +1,25 @@
+<?php
+    // Declaración de variables y arreglos al inicio del archivo
+    
+    // Uso de variables para configurar la disponibilidad del servicio
+    $horarioAtencion = "Lunes a Viernes de 9:00 a 18:00 hrs.";
+    $centroAbierto = true; // Si se cambia a false, el mensaje de abajo cambiará
+    
+    // Arreglo 1: Departamentos de atención
+    $departamentos = [
+        "Atención ciudadana",
+        "Soporte técnico de la plataforma",
+        "Alianzas estratégicas para reciclaje",
+        "Reporte de problemas en centros de acopio"
+    ];
+
+    // Arreglo 2: Preguntas Frecuentes (Para alargar el contenido)
+    $preguntasFrecuentes = [
+        "¿Tiene algún costo la recolección? - No, todos nuestros servicios en centros de acopio son gratuitos.",
+        "¿Qué pasa si mi alcaldía no tiene centro fijo? - Contamos con unidades móviles. Escríbenos para conocer la ruta.",
+        "¿Puedo ser voluntario? - ¡Claro! Envía un correo al departamento de Alianzas estratégicas."
+    ];
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -24,27 +46,6 @@
     </header>
 
     <main>
-        <?php
-            // Uso de variables para configurar la disponibilidad del servicio
-            $horarioAtencion = "Lunes a Viernes de 9:00 a 18:00 hrs.";
-            $centroAbierto = true; // Si se cambia a false, el mensaje de abajo cambiará
-            
-            // Arreglo 1: Departamentos de atención
-            $departamentos = [
-                "Atención ciudadana",
-                "Soporte técnico de la plataforma",
-                "Alianzas estratégicas para reciclaje",
-                "Reporte de problemas en centros de acopio"
-            ];
-
-            // Arreglo 2: Preguntas Frecuentes (Para alargar el contenido)
-            $preguntasFrecuentes = [
-                "¿Tiene algún costo la recolección? - No, todos nuestros servicios en centros de acopio son gratuitos.",
-                "¿Qué pasa si mi alcaldía no tiene centro fijo? - Contamos con unidades móviles. Escríbenos para conocer la ruta.",
-                "¿Puedo ser voluntario? - ¡Claro! Envía un correo al departamento de Alianzas estratégicas."
-            ];
-        ?>
-
         <!-- Primer bloque de contenido -->
         <section>
             <!-- Título con Flexbox para alinear la imagen a la derecha -->
@@ -62,13 +63,13 @@
             </ul>
             
             <?php
-                // Uso de condicional if/else para mostrar información diferente de acuerdo al estado
-                if ($centroAbierto) {
-                    echo "<p style='background-color: #e8f5e9; padding: 10px; border-left: 4px solid #2e7d32;'><strong>Estado:</strong> Actualmente nuestros canales de atención están abiertos y listos para apoyarte.</p>";
-                } else {
-                    echo "<p style='background-color: #ffebee; padding: 10px; border-left: 4px solid #d32f2f;'><strong>Estado:</strong> En este momento nuestras oficinas están cerradas. Déjanos un correo y te responderemos el siguiente día hábil.</p>";
-                }
+                // Uso de condicional if/else sin etiquetas HTML dentro de los echo
+                if ($centroAbierto) { 
             ?>
+                <p style='background-color: #e8f5e9; padding: 10px; border-left: 4px solid #2e7d32;'><strong>Estado:</strong> Actualmente nuestros canales de atención están abiertos y listos para apoyarte.</p>
+            <?php } else { ?>
+                <p style='background-color: #ffebee; padding: 10px; border-left: 4px solid #d32f2f;'><strong>Estado:</strong> En este momento nuestras oficinas están cerradas. Déjanos un correo y te responderemos el siguiente día hábil.</p>
+            <?php } ?>
         </section>
 
         <!-- Segundo bloque de contenido -->
@@ -77,11 +78,11 @@
             <p>Dependiendo de tu duda, puedes solicitar hablar con los siguientes departamentos:</p>
             <ul>
                 <?php
-                    // Estructura repetitiva foreach para recorrer e imprimir el arreglo de departamentos
-                    foreach ($departamentos as $depto) {
-                        echo "<li>" . $depto . "</li>";
-                    }
+                    // Estructura repetitiva foreach con el HTML por fuera
+                    foreach ($departamentos as $depto) { 
                 ?>
+                    <li><?php echo $depto; ?></li>
+                <?php } ?>
             </ul>
             <p>Nuestro equipo está capacitado para orientarte sobre los procesos de separación de residuos y la ubicación de los puntos verdes móviles que recorren las distintas alcaldías de la ciudad de manera programada.</p>
         </section>
@@ -92,10 +93,10 @@
             <ul>
                 <?php
                     // Estructura repetitiva foreach para el segundo arreglo
-                    foreach ($preguntasFrecuentes as $faq) {
-                        echo "<li>" . $faq . "</li>";
-                    }
+                    foreach ($preguntasFrecuentes as $faq) { 
                 ?>
+                    <li><?php echo $faq; ?></li>
+                <?php } ?>
             </ul>
         </section>
     </main>

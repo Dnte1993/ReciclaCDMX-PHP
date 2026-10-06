@@ -2,7 +2,7 @@
 Tercera versión del portal ReciclaCDMX, integrando formularios, validación de datos y manejo seguro de la información con PHP para la materia de Programación Web.
 
 ## Versión
-0.3.0
+0.3.1
 
 ## Tecnologías
 * HTML5 y CSS3 (Estructura, paleta institucional CDMX y estilos visuales)
@@ -46,6 +46,7 @@ En desarrollo (Fase 2 - Formularios y procesamiento de datos).
 ## Historial de versiones
 | Versión | Cambios principales |
 |---------|---------------------|
+| 0.3.1 | Refactorización final del código: reubicación de todas las declaraciones de variables y arreglos al inicio de los archivos para mayor claridad y limpieza de etiquetas HTML dentro de los ciclos y condicionales de PHP. |
 | 0.3.0 | Implementación de formularios interactivos (GET y POST). Desarrollo de buscador en el catálogo de materiales y panel de registro de aportaciones. Integración de validaciones de seguridad (`empty`, `htmlspecialchars`). |
 | 0.2.0 | Conversión de HTML a PHP. Integración de variables, arreglos, condicionales if/else y ciclos foreach en las 4 páginas. Ampliación de contenido informativo. |
 | 0.1.0 | Creación de la estructura base HTML5 (4 páginas), configuración de carpetas de recursos y navegación estática. |
