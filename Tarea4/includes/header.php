@@ -13,6 +13,7 @@
             <ul>
                 <li><a href="index.php">Inicio</a></li>
                 <li><a href="informacion.php">Información</a></li>
+                <li><a href="centros.php">Centros de Acopio</a></li>
                 <li><a href="detalle.php">Detalles de Reciclaje</a></li>
                 <li><a href="contador.php">Mi Contador</a></li>
                 <li><a href="contacto.php">Contacto</a></li>

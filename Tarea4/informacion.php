@@ -1,6 +1,8 @@
 <?php
-    // 1. Declaracion de las variables para la seccion de informacion y colocacion al principio como se solicitio en los comentarios de la tarea 2
+    // Reutilización de código: Se incluye el archivo de funciones propias
+    require_once 'includes/funciones.php';
 
+    // 1. Declaracion de las variables para la seccion de informacion
     $tituloInformacion = "¿Qué materiales reciclamos?";
     $descripcionBasica = "En nuestra plataforma encontrarás información sobre los principales materiales que se pueden reciclar en la CDMX y la forma correcta de acopiarlos. Búscalo en nuestro catálogo:";
     $campanaActiva = true; 
@@ -8,9 +10,9 @@
     $busqueda = "";
     $mensajeResultado = "";
     $materialEncontrado = null;
+    $imagenEncontrada = "";
 
     // Arreglo para la consulta GET 
-
     $catalogoMateriales = [
         "PET" => [
             "descripcion" => "Plástico tipo 1. Vacía el contenido, enjuaga y aplasta el envase.",
@@ -50,16 +52,13 @@
         ]
     ];
 
-    // 2. Procesamiento de busqueda con GET y la validacion de la variable con isset y empty 
-
+    // 2. Procesamiento de busqueda con GET
     if (isset($_GET["buscar"])) {
         $busqueda = htmlspecialchars(trim($_GET["buscar"]));
         
         if (!empty($busqueda)) {
-
             // Validamos si el material existe como clave principal en el arreglo
             if (isset($catalogoMateriales[$busqueda])) {
-                // Obtenemos los valores accediendo a sus claves internas
                 $materialEncontrado = $catalogoMateriales[$busqueda]["descripcion"];
                 $imagenEncontrada = $catalogoMateriales[$busqueda]["imagen"];
             } else {
@@ -68,31 +67,11 @@
         } else {
             $mensajeResultado = "Por favor, ingresa el nombre de un material para buscar.";
         }
-        }
+    }
+
+    // Reutilización de código: Se incluye el encabezado[cite: 6]
+    include 'includes/header.php';
 ?>
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ReciclaCDMX - Información</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
-
-<body>
-    <header>
-        <h1>ReciclaCDMX</h1>
-        <nav>
-            <ul>
-                <li><a href="index.php">Inicio</a></li>
-                <li><a href="informacion.php">Información</a></li>
-                <li><a href="detalle.php">Detalles de Reciclaje</a></li>
-                <li><a href="contador.php">Mi Contador</a></li>
-                <li><a href="contacto.php">Contacto</a></li>
-            </ul>
-        </nav>
-    </header>
 
     <main>
         <!-- Primer bloque: Presentación y Buscador GET -->
@@ -117,23 +96,19 @@
             <?php if ($materialEncontrado !== null) { ?>
                 <div style="background-color: #e8f5e9; padding: 15px; border-left: 5px solid #2e7d32; border-radius: 4px; text-align: center;">
                     <h3 style="color: #2e7d32; margin-top: 0;">Resultado encontrado para: <?php echo $busqueda; ?></h3>
-                    
-                    <!-- Imagen dinámica inyectada desde PHP -->
                     <img src="<?php echo $imagenEncontrada; ?>" alt="<?php echo $busqueda; ?>" style="width: 150px; height: 150px; object-fit: cover; border-radius: 8px; margin: 15px 0;">
-                    
                     <p style="text-align: left;"><?php echo $materialEncontrado; ?></p>
                 </div>
-            <?php } elseif (!empty($mensajeResultado)) { ?>
-                <div style="background-color: #ffebee; padding: 15px; border-left: 5px solid #c62828; border-radius: 4px;">
-                    <p style="color: #c62828; margin: 0;"><strong>Aviso:</strong> <?php echo $mensajeResultado; ?></p>
-                </div>
-            <?php } ?>
+            <?php } else { 
+                // Uso de la función propia para imprimir alertas sin repetir HTML[cite: 6]
+                echo mostrarMensaje($mensajeResultado, 'error');
+            } ?>
         </section>
 
         <!-- Tercer bloque: Lista dinámica e Impacto Ambiental -->
         <section>
             <h3>Catálogo Completo</h3>
-          <ul>
+            <ul>
                 <?php foreach ($catalogoMateriales as $nombre => $datos) { ?>
                     <li><strong><?php echo $nombre; ?></strong></li>
                 <?php } ?>
@@ -151,30 +126,7 @@
         </section>
     </main>
 
-    <footer>
-        <div class="footer-contenedor">
-            <div class="footer-col">
-                <p>Para emergencias,<br>marca al <strong style="color: #E65100;">911</strong></p>
-                <p>Dudas e información,<br>marca al <strong style="color: #E65100;">*0311</strong></p>
-            </div>
-            
-            <div class="footer-col">
-                <strong class="titulo-naranja">Redes de la Ciudad</strong>
-                <p style="font-weight: bold; font-size: 1.2rem; letter-spacing: 8px; color: #424242;">f 𝕏 📷 🎵</p>
-            </div>
-            
-            <div class="footer-col">
-                <strong class="titulo-naranja">Sitios relacionados</strong>
-                <p><a href="#">Agencia Digital de Innovación Pública.</a></p>
-                <strong class="titulo-naranja">Transparencia</strong>
-                <p><a href="#">Ir al portal de transparencia</a></p>
-            </div>
-        </div>
-        
-        <div class="footer-copy">
-            <p>&copy; 2026 ReciclaCDMX</p>
-        </div>
-    </footer>
-</body>
-
-</html>
+<?php
+    // Reutilización de código: Se incluye el pie de página[cite: 6]
+    include 'includes/footer.php';
+?>

@@ -1,4 +1,7 @@
 <?php
+    // Reutilización de código: Se incluye el archivo de funciones propias
+    require_once 'includes/funciones.php';
+
     // Declaración de variables y arreglos al inicio del archivo
     
     // Uso de variables para configurar la disponibilidad del servicio
@@ -13,37 +16,16 @@
         "Reporte de problemas en centros de acopio"
     ];
 
-    // Arreglo 2: Preguntas Frecuentes (Para alargar el contenido)
+    // Arreglo 2: Preguntas Frecuentes
     $preguntasFrecuentes = [
         "¿Tiene algún costo la recolección? - No, todos nuestros servicios en centros de acopio son gratuitos.",
         "¿Qué pasa si mi alcaldía no tiene centro fijo? - Contamos con unidades móviles. Escríbenos para conocer la ruta.",
         "¿Puedo ser voluntario? - ¡Claro! Envía un correo al departamento de Alianzas estratégicas."
     ];
+
+    // Reutilización de código: Se incluye el encabezado
+    include 'includes/header.php';
 ?>
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ReciclaCDMX - Contacto</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
-
-<body>
-    <header>
-        <h1>ReciclaCDMX</h1>
-        <nav>
-            <ul>
-                <!-- Enlaces actualizados a .php para navegación funcional -->
-                <li><a href="index.php">Inicio</a></li>
-                <li><a href="informacion.php">Información</a></li>
-                <li><a href="detalle.php">Detalles de Reciclaje</a></li>
-                <li><a href="contador.php">Mi Contador</a></li>
-                <li><a href="contacto.php">Contacto</a></li>
-            </ul>
-        </nav>
-    </header>
 
     <main>
         <!-- Primer bloque de contenido -->
@@ -63,13 +45,13 @@
             </ul>
             
             <?php
-                // Uso de condicional if/else sin etiquetas HTML dentro de los echo
+                // Uso de la función propia para imprimir alertas sin repetir HTML
                 if ($centroAbierto) { 
+                    echo mostrarMensaje("Actualmente nuestros canales de atención están abiertos y listos para apoyarte.", "exito");
+                } else {
+                    echo mostrarMensaje("En este momento nuestras oficinas están cerradas. Déjanos un correo y te responderemos el siguiente día hábil.", "error");
+                }
             ?>
-                <p style='background-color: #e8f5e9; padding: 10px; border-left: 4px solid #2e7d32;'><strong>Estado:</strong> Actualmente nuestros canales de atención están abiertos y listos para apoyarte.</p>
-            <?php } else { ?>
-                <p style='background-color: #ffebee; padding: 10px; border-left: 4px solid #d32f2f;'><strong>Estado:</strong> En este momento nuestras oficinas están cerradas. Déjanos un correo y te responderemos el siguiente día hábil.</p>
-            <?php } ?>
         </section>
 
         <!-- Segundo bloque de contenido -->
@@ -78,7 +60,7 @@
             <p>Dependiendo de tu duda, puedes solicitar hablar con los siguientes departamentos:</p>
             <ul>
                 <?php
-                    // Estructura repetitiva foreach con el HTML por fuera
+                    // Estructura repetitiva foreach
                     foreach ($departamentos as $depto) { 
                 ?>
                     <li><?php echo $depto; ?></li>
@@ -101,35 +83,7 @@
         </section>
     </main>
 
-    <footer>
-        <div class="footer-contenedor">
-            <!-- Columna 1: Teléfonos de emergencia -->
-            <div class="footer-col">
-                <p>Para emergencias,<br>marca al <strong style="color: #E65100;">911</strong></p>
-                <p>Dudas e información,<br>marca al <strong style="color: #E65100;">*0311</strong></p>
-            </div>
-            
-            <!-- Columna 2: Redes Sociales -->
-            <div class="footer-col">
-                <strong class="titulo-naranja">Redes de la Ciudad</strong>
-                <p style="font-weight: bold; font-size: 1.2rem; letter-spacing: 8px; color: #424242;">f 𝕏 📷 🎵</p>
-            </div>
-            
-            <!-- Columna 3: Enlaces relacionados -->
-            <div class="footer-col">
-                <strong class="titulo-naranja">Sitios relacionados</strong>
-                <p><a href="#">Agencia Digital de Innovación Pública.</a></p>
-                
-                <strong class="titulo-naranja">Transparencia</strong>
-                <p><a href="#">Ir al portal de transparencia</a></p>
-            </div>
-        </div>
-        
-        <!-- Barra de Copyright -->
-        <div class="footer-copy">
-            <p>&copy; 2026 ReciclaCDMX</p>
-        </div>
-    </footer>
-</body>
-
-</html>
+<?php
+    // Reutilización de código: Se incluye el pie de página
+    include 'includes/footer.php';
+?>

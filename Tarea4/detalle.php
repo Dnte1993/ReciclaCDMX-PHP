@@ -22,31 +22,11 @@
         "El material recuperado puede transformarse en fibra textil para ropa, mochilas o nuevos envases.",
         "Disminuye la saturación de los rellenos sanitarios de la Ciudad de México."
     ];
+
+    //-- Reutilización de código: Se incluye el encabezado
+        include 'includes/header.php';
 ?>
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ReciclaCDMX - Detalle PET</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
-
-<body>
-    <header>
-        <h1>ReciclaCDMX</h1>
-        <nav>
-            <ul>
-                <!-- Enlaces actualizados a .php -->
-                <li><a href="index.php">Inicio</a></li>
-                <li><a href="informacion.php">Información</a></li>
-                <li><a href="detalle.php">Detalles de Reciclaje</a></li>
-                <li><a href="contador.php">Mi Contador</a></li>
-                <li><a href="contacto.php">Contacto</a></li>
-            </ul>
-        </nav>
-    </header>
+    
 
     <main>
         <!-- Primer bloque: Detalles generales del material -->
@@ -98,35 +78,10 @@
         </section>
     </main>
 
-    <footer>
-        <div class="footer-contenedor">
-            <!-- Columna 1: Teléfonos de emergencia -->
-            <div class="footer-col">
-                <p>Para emergencias,<br>marca al <strong style="color: #E65100;">911</strong></p>
-                <p>Dudas e información,<br>marca al <strong style="color: #E65100;">*0311</strong></p>
-            </div>
-            
-            <!-- Columna 2: Redes Sociales -->
-            <div class="footer-col">
-                <strong class="titulo-naranja">Redes de la Ciudad</strong>
-                <p style="font-weight: bold; font-size: 1.2rem; letter-spacing: 8px; color: #424242;">f 𝕏 📷 🎵</p>
-            </div>
-            
-            <!-- Columna 3: Enlaces relacionados -->
-            <div class="footer-col">
-                <strong class="titulo-naranja">Sitios relacionados</strong>
-                <p><a href="#">Agencia Digital de Innovación Pública.</a></p>
-                
-                <strong class="titulo-naranja">Transparencia</strong>
-                <p><a href="#">Ir al portal de transparencia</a></p>
-            </div>
-        </div>
-        
-        <!-- Barra de Copyright -->
-        <div class="footer-copy">
-            <p>&copy; 2026 ReciclaCDMX</p>
-        </div>
-    </footer>
+<?php
+    // Reutilización de código: Se incluye el pie de página
+    include 'includes/footer.php';
+?>
 </body>
 
 </html>

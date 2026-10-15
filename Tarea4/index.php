@@ -1,4 +1,7 @@
 <?php
+    // Reutilización de código: Se incluye el archivo de funciones propias[cite: 6]
+    require_once 'includes/funciones.php';
+
     // Uso de variables para el título y descripción general
     $tituloPrincipal = "Bienvenido a ReciclaCDMX";
     $mensajeBienvenida = "Plataforma para la gestión y consulta de reciclaje en la Ciudad de México. Únete a nuestra iniciativa para un futuro más limpio.";
@@ -12,7 +15,7 @@
         "Conectar iniciativas ciudadanas con puntos de reciclaje."
     ];
 
-    // Reutilización de código: Se incluye el encabezado
+    // Reutilización de código: Se incluye el encabezado[cite: 6]
     include 'includes/header.php';
 ?>
 
@@ -26,11 +29,14 @@
             <p><?php echo $mensajeBienvenida; ?></p>
             <p>Al participar en este programa, ayudas a que miles de toneladas de residuos sean procesadas adecuadamente, reduciendo la contaminación urbana y fomentando una economía circular en tu alcaldía.</p>
             
-            <?php if ($esUsuarioNuevo) { ?>
-                <p style="background-color: #e8f5e9; padding: 10px; border-left: 4px solid #2e7d32;"><strong>¡Qué gusto tenerte aquí!</strong> Te invitamos a explorar la sección de Información para comenzar a reciclar.</p>
-            <?php } else { ?>
-                <p style="background-color: #e3f2fd; padding: 10px; border-left: 4px solid #1976d2;"><strong>¡Qué bueno verte de regreso!</strong> Conoce las últimas actualizaciones en nuestros centros de acopio.</p>
-            <?php } ?>
+            <?php
+                // Uso de la función propia para imprimir alertas sin repetir HTML[cite: 6]
+                if ($esUsuarioNuevo) {
+                    echo mostrarMensaje("Te invitamos a explorar la sección de Información para comenzar a reciclar.", "exito");
+                } else {
+                    echo mostrarMensaje("Conoce las últimas actualizaciones en nuestros centros de acopio.", "info");
+                }
+            ?>
         </section>
 
         <section>
@@ -44,6 +50,6 @@
     </main>
 
 <?php
-    // Reutilización de código: Se incluye el pie de página
+    // Reutilización de código: Se incluye el pie de página[cite: 6]
     include 'includes/footer.php';
 ?>
