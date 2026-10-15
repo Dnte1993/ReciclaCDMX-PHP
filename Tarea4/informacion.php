@@ -12,45 +12,8 @@
     $materialEncontrado = null;
     $imagenEncontrada = "";
 
-    // Arreglo para la consulta GET 
-    $catalogoMateriales = [
-        "PET" => [
-            "descripcion" => "Plástico tipo 1. Vacía el contenido, enjuaga y aplasta el envase.",
-            "imagen" => "img/pet.jpg"
-        ],
-        "Carton" => [
-            "descripcion" => "Cajas y empaques. Desarma las cajas, mantenlas secas y atadas.",
-            "imagen" => "img/carton.jpg"
-        ],
-        "Vidrio" => [
-            "descripcion" => "Botellas y frascos. Enjuaga y separa por color (transparente, verde, ámbar).",
-            "imagen" => "img/vidrio.jpg"
-        ],
-        "Aluminio" => [
-            "descripcion" => "Latas de bebidas y alimentos. Vacía, enjuaga y aplasta para ahorrar espacio.",
-            "imagen" => "img/aluminio.jpg"
-        ],
-        "Pilas" => [
-            "descripcion" => "Baterías de uso doméstico. Retira las pilas y deposita en contenedores específicos.",
-            "imagen" => "img/pilas.jpg"
-        ],
-        "Electrónicos" => [
-            "descripcion" => "Aparatos electrónicos. Lleva a centros de acopio especializados para su reciclaje seguro.",
-            "imagen" => "img/electronicos.jpg"
-        ],
-        "Aceite" => [
-            "descripcion" => "Aceite de cocina usado. Almacena en botellas y llévalo a puntos de recolección autorizados.",
-            "imagen" => "img/aceite.jpg"
-        ],
-        "Ropa" => [
-            "descripcion" => "Prendas de vestir. Dona ropa limpia y en buen estado a centros de acopio o tiendas de segunda mano.",
-            "imagen" => "img/ropa.jpg"
-        ],
-        "Tetrapak" => [
-            "descripcion" => "Envases de cartón para líquidos. Enjuaga y aplasta antes de depositar en contenedores de reciclaje.",
-            "imagen" => "img/tetrapak.jpg"
-        ]
-    ];
+    // Invocamos la Función 4 para cargar el arreglo desde el archivo centralizado
+    $catalogoMateriales = obtenerCatalogoMateriales();
 
     // 2. Procesamiento de busqueda con GET
     if (isset($_GET["buscar"])) {
@@ -69,7 +32,7 @@
         }
     }
 
-    // Reutilización de código: Se incluye el encabezado[cite: 6]
+    // Reutilización de código: Se incluye el encabezado
     include 'includes/header.php';
 ?>
 
@@ -100,7 +63,7 @@
                     <p style="text-align: left;"><?php echo $materialEncontrado; ?></p>
                 </div>
             <?php } else { 
-                // Uso de la función propia para imprimir alertas sin repetir HTML[cite: 6]
+                // Uso de la función propia para imprimir alertas
                 echo mostrarMensaje($mensajeResultado, 'error');
             } ?>
         </section>
@@ -127,6 +90,6 @@
     </main>
 
 <?php
-    // Reutilización de código: Se incluye el pie de página[cite: 6]
+    // Reutilización de código: Se incluye el pie de página
     include 'includes/footer.php';
 ?>
