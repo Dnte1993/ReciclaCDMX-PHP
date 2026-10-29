@@ -1,7 +1,15 @@
 <?php
+    // 0. Protección de acceso (Sesiones)[cite: 42]
+    require_once 'includes/auth.php';
+    if (!estaLogueado()) {
+        // Si no hay sesión activa, impedimos el acceso y redirigimos al login[cite: 42]
+        header("Location: login.php");
+        exit();
+    }
+
     // Reutilización de código: Se incluye el archivo de funciones propias
     require_once 'includes/funciones.php';
-
+    
     // 1. Declaración de variables
     $tipoMaterial = "";
     $cantidad = "";
