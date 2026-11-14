@@ -32,6 +32,7 @@ if (session_status() === PHP_SESSION_NONE) {
                 <li><a href="informacion.php">Información</a></li>
                 <li><a href="centros.php">Centros de Acopio</a></li>
                 <li><a href="detalle.php">Detalles de Reciclaje</a></li>
+                <li><a href="registro.php">Registro</a></li>
                 <?php if (($_SESSION["rol"] ?? "") === "registrado"): ?>
                     <li><a href="contador.php">Mi Contador</a></li>
                 <?php endif; ?>
