@@ -11,7 +11,7 @@ Este repositorio documenta la evolución progresiva del portal **ReciclaCDMX**, 
 - **[Tarea 3](./Tarea3/):** Interactividad mediante métodos HTTP `GET` y `POST` con validaciones básicas.
 - **[Tarea 4](./Tarea4/):** Modularización con `includes/`, funciones propias y expansión a 6 páginas.
 - **[Tarea 5](./Tarea5/):** Sesiones (`$_SESSION`), cookies (`$_COOKIE`) y navegación dinámica por roles.
-- **[Tarea 6](./Tarea6/):** Integración de MySQL. Conexión mediante `mysqli`, registro seguro de usuarios con `password_hash()`, autenticación con consultas preparadas y `password_verify()`, y respaldo SQL en la carpeta `database/`[cite: 20, 21].
+- **[Tarea 6](./Tarea6/):** Integración de MySQL. Conexión mediante `mysqli`, registro seguro de usuarios con `password_hash()`, autenticación con consultas preparadas y `password_verify()`, y respaldo SQL en la carpeta `database/`.
 
 ## Tecnologías Utilizadas
 - HTML5

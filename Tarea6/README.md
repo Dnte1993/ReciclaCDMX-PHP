@@ -30,7 +30,7 @@ El repositorio incluye el archivo de respaldo en la ruta `database/recicla_cdmx.
 
 ## Funcionalidades agregadas en esta versión (0.6.0)
 - **Conexión MySQLi (`includes/conexion.php`):** Enlace centralizado con el servidor de base de datos bajo codificación UTF-8.
-- **Registro Seguro (`registro.php`):** Formulario público que valida entradas por POST, comprueba duplicidad de correos con consultas preparadas y almacena contraseñas utilizando `password_hash()` con `PASSWORD_DEFAULT`[cite: 20].
+- **Registro Seguro (`registro.php`):** Formulario público que valida entradas por POST, comprueba duplicidad de correos con consultas preparadas y almacena contraseñas utilizando `password_hash()` con `PASSWORD_DEFAULT`.
 - **Autenticación con Base de Datos (`login.php` y `auth.php`):** Validación de credenciales mediante consultas preparadas en MySQL y verificación de hashes seguros con `password_verify()`[cite: 20], manteniendo intactas las cookies de recuerdo y el control de acceso por roles.
 
 ## Historial de versiones
