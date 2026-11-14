@@ -1,9 +1,15 @@
 <?php
-    // 0. Protección de acceso (Sesiones)[cite: 42]
+    // 0. Protección de acceso (Sesiones y Rol)
     require_once 'includes/auth.php';
     if (!estaLogueado()) {
-        // Si no hay sesión activa, impedimos el acceso y redirigimos al login[cite: 42]
+        // Si no hay sesión activa, impedimos el acceso y redirigimos al login
         header("Location: login.php");
+        exit();
+    }
+
+    // Validación de rol: Solo el usuario "registrado" tiene acceso a Mi Contador
+    if (($_SESSION["rol"] ?? "") !== "registrado") {
+        header("Location: index.php");
         exit();
     }
 
@@ -99,6 +105,6 @@
     </main>
 
 <?php
-    // Reutilización de código: Se incluye el pie de página[cite: 6]
+    // Reutilización de código: Se incluye el pie de página
     include 'includes/footer.php';
 ?>

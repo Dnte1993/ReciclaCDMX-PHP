@@ -1,5 +1,5 @@
 <?php
-// Iniciamos sesión de forma segura si no está iniciada, para leer el estado del usuario en toda la navegación[cite: 42]
+// Iniciamos sesión de forma segura si no está iniciada, para leer el estado del usuario en toda la navegación
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -17,7 +17,7 @@ if (session_status() === PHP_SESSION_NONE) {
         <div style="display: flex; justify-content: space-between; align-items: center;">
             <h1 style="margin: 0;">ReciclaCDMX</h1>
             
-            <!-- Panel de navegación condicional según sesión[cite: 42] -->
+            <!-- Panel de navegación condicional según sesión -->
             <div style="color: white; font-weight: bold; font-size: 0.9em;">
                 <?php if (isset($_SESSION['usuario'])) { ?>
                     👤 Hola, <?php echo $_SESSION['nombre']; ?> (<?php echo $_SESSION['rol']; ?>) | <a href="logout.php" style="color: #ffccbc; text-decoration: none;">Cerrar Sesión</a>
@@ -32,7 +32,9 @@ if (session_status() === PHP_SESSION_NONE) {
                 <li><a href="informacion.php">Información</a></li>
                 <li><a href="centros.php">Centros de Acopio</a></li>
                 <li><a href="detalle.php">Detalles de Reciclaje</a></li>
-                <li><a href="contador.php">Mi Contador</a></li>
+                <?php if (($_SESSION["rol"] ?? "") === "registrado"): ?>
+                    <li><a href="contador.php">Mi Contador</a></li>
+                <?php endif; ?>
                 <li><a href="contacto.php">Contacto</a></li>
             </ul>
         </nav>

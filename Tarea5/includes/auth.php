@@ -2,7 +2,7 @@
 // Iniciar o reanudar la sesión en cualquier página que cargue este archivo
 session_start();
 
-// Función que simula una base de datos con los usuarios y sus roles[cite: 42]
+// Función que simula una base de datos con los usuarios y sus roles
 function obtenerUsuarios() {
     return [
         "usuario@reciclacdmx.com" => [
@@ -18,7 +18,7 @@ function obtenerUsuarios() {
     ];
 }
 
-// Función auxiliar para verificar si hay una sesión activa[cite: 42]
+// Función auxiliar para verificar si hay una sesión activa
 function estaLogueado() {
     return isset($_SESSION['usuario']);
 }
