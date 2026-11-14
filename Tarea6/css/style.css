@@ -1,0 +1,161 @@
+/* Restablecimiento básico */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f2f2f2;
+    /* Gris muy claro para contraste limpio */
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Estilos del Encabezado y Navegación */
+header {
+    background-color: #E65100;
+    /* Naranja institucional CDMX */
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 4px solid #424242;
+    /* Línea de acento gris oscuro */
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.8rem;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 1.5rem;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 0.5rem;
+    transition: background-color 0.3s;
+}
+
+nav a:hover {
+    background-color: #BF360C;
+    /* Naranja más oscuro para el hover */
+    border-radius: 5px;
+}
+
+/* Estilos del Contenido Principal */
+main {
+    flex: 1;
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    /* Sombra ligeramente más profunda */
+    width: 90%;
+}
+
+h2 {
+    color: #E65100;
+    /* Naranja institucional */
+    border-bottom: 2px solid #bdbdbd;
+    /* Gris medio para el separador */
+    padding-bottom: 0.5rem;
+}
+
+/* Estilos básicos para el formulario de contacto */
+form input,
+form textarea {
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #E65100;
+    /* Naranja institucional */
+    color: white;
+    border: none;
+    padding: 0.7rem 1.5rem;
+    margin-top: 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #BF360C;
+    /* Naranja más oscuro para el hover */
+}
+
+/* Estilos del Pie de Página Institucional CDMX */
+footer {
+    background-color: white;
+    border-top: 4px solid #E65100;
+    /* Borde superior Naranja */
+    margin-top: auto;
+    font-size: 0.95rem;
+}
+
+.footer-contenedor {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    gap: 20px;
+}
+
+.footer-col {
+    flex: 1;
+    color: #424242;
+    /* Gris oscuro para el texto */
+    text-align: left;
+}
+
+.footer-col strong.titulo-naranja {
+    color: #E65100;
+    /* Títulos en Naranja */
+    display: block;
+    margin-bottom: 8px;
+    font-size: 1.05rem;
+}
+
+.footer-col p {
+    margin: 0 0 1rem 0;
+    line-height: 1.4;
+}
+
+.footer-col a {
+    color: #424242;
+    text-decoration: none;
+}
+
+.footer-col a:hover {
+    color: #E65100;
+    /* Efecto hover en Naranja */
+    text-decoration: underline;
+}
+
+.footer-copy {
+    background-color: #424242;
+    /* Fondo Gris oscuro */
+    color: white;
+    text-align: center;
+    padding: 1rem 0;
+}
