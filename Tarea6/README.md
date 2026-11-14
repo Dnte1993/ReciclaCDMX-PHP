@@ -9,6 +9,9 @@ Sexta versión del portal ReciclaCDMX. En esta entrega se integra de manera defi
 - PHP 8.2 (Lógica, sesiones, cookies, consultas preparadas y hashing)
 - MySQL (Persistencia de datos y gestión de usuarios)
 
+## Enlaces del Proyecto
+- **Repositorio en GitHub:** [Ver repositorio en GitHub]([https://github.com/Dnte1993/ReciclaCDMX-PHP])
+
 ## Requisitos
 - Servidor local con Apache y MySQL (ej. XAMPP).
 - Importación previa del archivo SQL ubicado en la carpeta `database/`.
@@ -27,11 +30,12 @@ El repositorio incluye el archivo de respaldo en la ruta `database/recicla_cdmx.
 | :--- | :--- | :--- | :--- |
 | Ciudadano | usuario@reciclacdmx.com | 12345 | registrado |
 | Administrador | admin@reciclacdmx.com | admin123 | admin |
-
+| Ciudadano | dan@reciclacdmx.com | 123456 | registrado
+ |
 ## Funcionalidades agregadas en esta versión (0.6.0)
 - **Conexión MySQLi (`includes/conexion.php`):** Enlace centralizado con el servidor de base de datos bajo codificación UTF-8.
 - **Registro Seguro (`registro.php`):** Formulario público que valida entradas por POST, comprueba duplicidad de correos con consultas preparadas y almacena contraseñas utilizando `password_hash()` con `PASSWORD_DEFAULT`.
-- **Autenticación con Base de Datos (`login.php` y `auth.php`):** Validación de credenciales mediante consultas preparadas en MySQL y verificación de hashes seguros con `password_verify()`[cite: 20], manteniendo intactas las cookies de recuerdo y el control de acceso por roles.
+- **Autenticación con Base de Datos (`login.php` y `auth.php`):** Validación de credenciales mediante consultas preparadas en MySQL y verificación de hashes seguros con `password_verify()`, manteniendo intactas las cookies de recuerdo y el control de acceso por roles.
 
 ## Historial de versiones
 | Versión | Cambios principales |

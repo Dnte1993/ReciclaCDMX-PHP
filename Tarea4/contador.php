@@ -91,6 +91,6 @@
     </main>
 
 <?php
-    // Reutilización de código: Se incluye el pie de página[cite: 6]
+    // Reutilización de código: Se incluye el pie de página
     include 'includes/footer.php';
 ?>

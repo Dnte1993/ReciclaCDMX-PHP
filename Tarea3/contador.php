@@ -7,7 +7,7 @@
     $mensajeExito = "";
     $mensajeError = "";
 
-    // 2. Recepción y validación de datos con POST[cite: 46]
+    // 2. Recepción y validación de datos con POST
 
     if (isset($_POST["material"])) {
         
@@ -15,16 +15,16 @@
         $cantidad = $_POST["cantidad"];
         $fecha = $_POST["fecha"];
 
-        // Si el usuario no elige fecha, usamos date() para asignar la fecha actual[cite: 64]
+        // Si el usuario no elige fecha, usamos date() para asignar la fecha actual
         if (empty($fecha)) {
             $fecha = date("Y-m-d");
         }
 
-        // Validación: verificamos que material y cantidad no estén vacíos[cite: 8]
+        // Validación: verificamos que material y cantidad no estén vacíos
         if (empty($tipoMaterial) || empty($cantidad)) {
             $mensajeError = "Por favor, selecciona un material e ingresa la cantidad.";
         } else {
-            // Manejo seguro con htmlspecialchars()[cite: 53]
+            // Manejo seguro con htmlspecialchars()
             $materialSeguro = htmlspecialchars($tipoMaterial);
             $cantidadSegura = htmlspecialchars($cantidad);
             $fechaSegura = htmlspecialchars($fecha);

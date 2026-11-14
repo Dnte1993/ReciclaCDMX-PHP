@@ -59,7 +59,7 @@
 
             // Validamos si el material existe como clave principal en el arreglo
             if (isset($catalogoMateriales[$busqueda])) {
-                // Obtenemos los valores accediendo a sus claves internas[cite: 25]
+                // Obtenemos los valores accediendo a sus claves internas
                 $materialEncontrado = $catalogoMateriales[$busqueda]["descripcion"];
                 $imagenEncontrada = $catalogoMateriales[$busqueda]["imagen"];
             } else {

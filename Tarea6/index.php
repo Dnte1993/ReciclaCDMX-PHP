@@ -1,5 +1,5 @@
 <?php
-    // Reutilización de código: Se incluye el archivo de funciones propias[cite: 6]
+    // Reutilización de código: Se incluye el archivo de funciones propias
     require_once 'includes/funciones.php';
 
     // Uso de variables para el título y descripción general
@@ -15,7 +15,7 @@
         "Conectar iniciativas ciudadanas con puntos de reciclaje."
     ];
 
-    // Reutilización de código: Se incluye el encabezado[cite: 6]
+    // Reutilización de código: Se incluye el encabezado
     include 'includes/header.php';
 ?>
 
@@ -30,7 +30,7 @@
             <p>Al participar en este programa, ayudas a que miles de toneladas de residuos sean procesadas adecuadamente, reduciendo la contaminación urbana y fomentando una economía circular en tu alcaldía.</p>
             
             <?php
-                // Uso de la función propia para imprimir alertas sin repetir HTML[cite: 6]
+                // Uso de la función propia para imprimir alertas sin repetir HTML
                 if ($esUsuarioNuevo) {
                     echo mostrarMensaje("Te invitamos a explorar la sección de Información para comenzar a reciclar.", "exito");
                 } else {
@@ -50,6 +50,6 @@
     </main>
 
 <?php
-    // Reutilización de código: Se incluye el pie de página[cite: 6]
+    // Reutilización de código: Se incluye el pie de página
     include 'includes/footer.php';
 ?>
