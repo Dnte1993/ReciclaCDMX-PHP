@@ -20,7 +20,7 @@ if (session_status() === PHP_SESSION_NONE) {
             <!-- Panel de navegación condicional según sesión -->
             <div style="color: white; font-weight: bold; font-size: 0.9em;">
                 <?php if (isset($_SESSION['usuario'])) { ?>
-                    👤 Hola, <?php echo $_SESSION['nombre']; ?> (<?php echo $_SESSION['rol']; ?>) | <a href="logout.php" style="color: #ffccbc; text-decoration: none;">Cerrar Sesión</a>
+                    👤 Hola, <?php echo htmlspecialchars($_SESSION['nombre']); ?> (<?php echo htmlspecialchars($_SESSION['rol']); ?>) | <a href="logout.php" style="color: #ffccbc; text-decoration: none;">Cerrar Sesión</a>
                 <?php } else { ?>
                     <a href="login.php" style="background-color: #ffccbc; color: #d84315; padding: 6px 15px; border-radius: 4px; text-decoration: none;">Iniciar Sesión</a>
                 <?php } ?>
@@ -32,9 +32,14 @@ if (session_status() === PHP_SESSION_NONE) {
                 <li><a href="informacion.php">Información</a></li>
                 <li><a href="centros.php">Centros de Acopio</a></li>
                 <li><a href="detalle.php">Detalles de Reciclaje</a></li>
-                <li><a href="registro.php">Registro</a></li>
+                <?php if (!isset($_SESSION['usuario'])): ?>
+                    <li><a href="registro.php">Registro</a></li>
+                <?php endif; ?>
                 <?php if (($_SESSION["rol"] ?? "") === "registrado"): ?>
                     <li><a href="contador.php">Mi Contador</a></li>
+                <?php endif; ?>
+                <?php if (($_SESSION["rol"] ?? "") === "admin"): ?>
+                    <li><a href="gestion_aportaciones.php">Gestión de Aportaciones</a></li>
                 <?php endif; ?>
                 <li><a href="contacto.php">Contacto</a></li>
             </ul>

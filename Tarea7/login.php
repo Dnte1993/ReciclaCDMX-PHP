@@ -3,10 +3,12 @@
     require_once 'includes/auth.php';
     require_once 'includes/funciones.php';
 
-    // 2. Proteger la página: Si ya está logueado, redirigimos según su rol
+    // 2. Proteger la página: Si ya está logueado, redirigimos según su rol a su apartado exclusivo
     if (estaLogueado()) {
         if (($_SESSION["rol"] ?? "") === "registrado") {
             header("Location: contador.php");
+        } elseif (($_SESSION["rol"] ?? "") === "admin") {
+            header("Location: gestion_aportaciones.php");
         } else {
             header("Location: index.php");
         }
@@ -62,6 +64,8 @@
                     // Redirigir según el rol del usuario autenticado
                     if ($_SESSION['rol'] === "registrado") {
                         header("Location: contador.php");
+                    } elseif ($_SESSION['rol'] === "admin") {
+                        header("Location: gestion_aportaciones.php");
                     } else {
                         header("Location: index.php");
                     }
@@ -85,7 +89,7 @@
         <section style="display: flex; justify-content: center; align-items: center; min-height: 50vh;">
             <div style="background-color: #f5f5f5; padding: 30px; border-radius: 8px; border-top: 4px solid #E65100; width: 100%; max-width: 400px;">
                 <h2 style="text-align: center; margin-top: 0;">Iniciar Sesión</h2>
-                <p style="text-align: center; font-size: 0.9em;">Accede para registrar tus aportaciones</p>
+                <p style="text-align: center; font-size: 0.9em;">Accede para registrar o gestionar aportaciones</p>
                 
                 <?php echo mostrarMensaje($mensajeError, 'error'); ?>
 

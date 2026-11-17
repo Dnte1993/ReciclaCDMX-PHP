@@ -12,12 +12,32 @@ function estaLogueado() {
     return isset($_SESSION['id_usuario']) && isset($_SESSION['usuario']);
 }
 
-// Función para garantizar que existan las cuentas de prueba de cada rol en MySQL con contraseña encriptada
-function inicializarUsuariosPrueba($conexion) {
+// Función para garantizar la estructura de la tabla aportaciones, usuarios de prueba y registros iniciales
+function inicializarDatosPruebaTarea7($conexion) {
+    // 1. Asegurar que la tabla aportaciones exista en la base de datos
+    $sqlTabla = "CREATE TABLE IF NOT EXISTS aportaciones (
+        id_aportacion INT AUTO_INCREMENT PRIMARY KEY,
+        id_usuario INT NOT NULL,
+        tipo_material VARCHAR(50) NOT NULL,
+        cantidad_kg DECIMAL(10,2) NOT NULL,
+        fecha_recoleccion DATE NOT NULL,
+        estado ENUM('Pendiente', 'Validado', 'Rechazado') NOT NULL DEFAULT 'Pendiente',
+        fecha_registro DATETIME DEFAULT CURRENT_TIMESTAMP,
+        CONSTRAINT fk_aportacion_usuario FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
+    mysqli_query($conexion, $sqlTabla);
+
+    // 2. Definir al menos dos usuarios ciudadanos de prueba y un administrador
     $cuentasPrueba = [
         [
-            "nombre" => "Ciudadano",
+            "nombre" => "Ciudadano Uno",
             "correo" => "usuario@reciclacdmx.com",
+            "password" => "12345",
+            "rol" => "registrado"
+        ],
+        [
+            "nombre" => "María López",
+            "correo" => "ciudadano2@reciclacdmx.com",
             "password" => "12345",
             "rol" => "registrado"
         ],
@@ -46,8 +66,51 @@ function inicializarUsuariosPrueba($conexion) {
         }
         mysqli_stmt_close($stmtCheck);
     }
+
+    // 3. Sembrar aportaciones de prueba para cada ciudadano si la tabla aportaciones está vacía
+    $resConteo = mysqli_query($conexion, "SELECT COUNT(*) AS total FROM aportaciones");
+    $filaConteo = mysqli_fetch_assoc($resConteo);
+
+    if ((int)$filaConteo['total'] === 0) {
+        $aportacionesIniciales = [
+            // Registros propios del Ciudadano 1
+            ["correo" => "usuario@reciclacdmx.com", "material" => "PET", "cantidad" => 4.50, "fecha" => "2026-11-05", "estado" => "Validado"],
+            ["correo" => "usuario@reciclacdmx.com", "material" => "Aluminio", "cantidad" => 2.20, "fecha" => "2026-11-10", "estado" => "Pendiente"],
+            // Registros propios del Ciudadano 2
+            ["correo" => "ciudadano2@reciclacdmx.com", "material" => "Cartón", "cantidad" => 8.00, "fecha" => "2026-11-08", "estado" => "Validado"],
+            ["correo" => "ciudadano2@reciclacdmx.com", "material" => "Vidrio", "cantidad" => 3.75, "fecha" => "2026-11-12", "estado" => "Pendiente"]
+        ];
+
+        foreach ($aportacionesIniciales as $item) {
+            // Obtener el id_usuario correspondiente al correo
+            $stmtUser = mysqli_prepare($conexion, "SELECT id_usuario FROM usuarios WHERE correo = ?");
+            mysqli_stmt_bind_param($stmtUser, "s", $item['correo']);
+            mysqli_stmt_execute($stmtUser);
+            $resUser = mysqli_stmt_get_result($stmtUser);
+
+            if ($userRow = mysqli_fetch_assoc($resUser)) {
+                $idUsuario = (int)$userRow['id_usuario'];
+                $stmtAportacion = mysqli_prepare(
+                    $conexion,
+                    "INSERT INTO aportaciones (id_usuario, tipo_material, cantidad_kg, fecha_recoleccion, estado) VALUES (?, ?, ?, ?, ?)"
+                );
+                mysqli_stmt_bind_param(
+                    $stmtAportacion,
+                    "isdss",
+                    $idUsuario,
+                    $item['material'],
+                    $item['cantidad'],
+                    $item['fecha'],
+                    $item['estado']
+                );
+                mysqli_stmt_execute($stmtAportacion);
+                mysqli_stmt_close($stmtAportacion);
+            }
+            mysqli_stmt_close($stmtUser);
+        }
+    }
 }
 
-// Ejecutar la verificación de cuentas iniciales
-inicializarUsuariosPrueba($conexion);
+// Ejecutar la verificación de estructura, cuentas iniciales y aportaciones de prueba
+inicializarDatosPruebaTarea7($conexion);
 ?>
