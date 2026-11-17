@@ -2,22 +2,25 @@
 
 Repositorio central de las prácticas y tareas desarrolladas para la materia de Programación Web de la Licenciatura en Sistemas Computacionales en UNIMEX.
 
-Este repositorio documenta la evolución progresiva del portal **ReciclaCDMX**, mostrando el avance desde una maquetación inicial estática hasta la integración completa de bases de datos relacionales en MySQL con PHP en el servidor.
+Este repositorio documenta la evolución progresiva del portal **ReciclaCDMX**, mostrando el avance desde una maquetación inicial estática hasta la integración completa de bases de datos relacionales en MySQL con PHP en el servidor y gestión diferenciada por roles.
 
 ## Estructura del Repositorio
 
-- **[Tarea 1](./Tarea1/):** Maquetación estática con HTML5 y CSS3 (Flexbox y paleta institucional).
-- **[Tarea 2](./Tarea2/):** Transición a páginas dinámicas con PHP 8.2 (Variables, arreglos y estructuras de control).
-- **[Tarea 3](./Tarea3/):** Interactividad mediante métodos HTTP `GET` y `POST` con validaciones básicas.
-- **[Tarea 4](./Tarea4/):** Modularización con `includes/`, funciones propias y expansión a 6 páginas.
-- **[Tarea 5](./Tarea5/):** Sesiones (`$_SESSION`), cookies (`$_COOKIE`) y navegación dinámica por roles.
-- **[Tarea 6](./Tarea6/):** Integración de MySQL. Conexión mediante `mysqli`, registro seguro de usuarios con `password_hash()`, autenticación con consultas preparadas y `password_verify()`, y respaldo SQL en la carpeta `database/`.
+El proyecto está dividido en entregas iterativas. Cada carpeta contiene el código fuente de esa etapa y su propia documentación técnica detallada:
+
+- **[Tarea 1](./Tarea1/):** Diseño y maquetación estática utilizando HTML5 y CSS3 (Implementación de Flexbox, diseño responsivo y paleta institucional).
+- **[Tarea 2](./Tarea2/):** Transición a páginas dinámicas. Integración de PHP 8.2, declaración de variables, manejo de arreglos y uso de estructuras de control (`if/else`, `foreach`).
+- **[Tarea 3](./Tarea3/):** Interactividad y paso de parámetros. Implementación de formularios seguros utilizando los métodos HTTP `GET` (catálogo y buscador) y `POST` (panel de registro de usuario), con validaciones estrictas (`isset`, `empty`, `htmlspecialchars`).
+- **[Tarea 4](./Tarea4/):** Cierre de la Fase 1. Modularización del código mediante `include` y `require_once` para encabezados y pies de página, creación de funciones propias para validaciones o catálogos, y expansión a 6 páginas dinámicas.
+- **[Tarea 5](./Tarea5/):** Inicio de la Fase 2. Implementación de control de acceso mediante sesiones (`$_SESSION`), manejo de cookies (`setcookie`, `$_COOKIE`) para recordar credenciales, redirecciones de seguridad y visibilidad condicional de apartados en el menú de navegación según la sesión activa y el rol del usuario (`registrado` / `admin`).
+- **[Tarea 6](./Tarea6/):** Integración de MySQL. Creación de la base de datos `recicla_cdmx` y tabla `usuarios`, conexión mediante `mysqli`, registro seguro de usuarios con `password_hash()`, autenticación con consultas preparadas y `password_verify()`, y respaldo SQL en la carpeta `database/`.
+- **[Tarea 7](./Tarea7/):** Gestión de información relacional con MySQL. Creación de la tabla `aportaciones` vinculada a `usuarios`. Registro (`INSERT`) y consulta (`SELECT`) de aportaciones propias por ciudadano en `contador.php`, y panel exclusivo para el administrador (`gestion_aportaciones.php`) con consulta global (`INNER JOIN`) y actualización de estado de validación (`UPDATE`) mediante consultas preparadas.
 
 ## Tecnologías Utilizadas
 - HTML5
 - CSS3 (Flexbox)
 - PHP 8.2
-- MySQL
+- MySQL / MariaDB
 
 ## Autor
 **Dante David Hernández Rodríguez**
