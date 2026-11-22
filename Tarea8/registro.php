@@ -7,18 +7,22 @@
     if (estaLogueado()) {
         if (($_SESSION["rol"] ?? "") === "registrado") {
             header("Location: contador.php");
+        } elseif (($_SESSION["rol"] ?? "") === "admin") {
+            header("Location: gestion_aportaciones.php");
         } else {
             header("Location: index.php");
         }
         exit();
     }
 
+    // Declaración de variables iniciales antes del HTML
     $nombre = "";
     $correo = "";
     $mensajeError = "";
     $mensajeExito = "";
 
     // 3. Recibir y validar los datos mediante POST
+   
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $nombre = trim($_POST['nombre'] ?? '');
         $correo = trim($_POST['correo'] ?? '');
@@ -93,7 +97,7 @@
 
                     <div style="margin-bottom: 20px;">
                         <label for="password" style="font-weight: bold; display: block; margin-bottom: 5px;">Contraseña (mín. 5 caracteres):</label>
-                        <input type="password" id="password" name="password" required style="width: 100%; padding: 8px; box-sizing: border-box;">
+                        <input type="password" id="password" name="password" minlength="5" required style="width: 100%; padding: 8px; box-sizing: border-box;">
                     </div>
 
                     <button type="submit" style="padding: 10px 20px; background-color: #E65100; color: white; border: none; border-radius: 4px; cursor: pointer; width: 100%; font-weight: bold;">Registrarme</button>

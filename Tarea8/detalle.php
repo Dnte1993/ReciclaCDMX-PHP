@@ -82,6 +82,3 @@
     // Reutilización de código: Se incluye el pie de página
     include 'includes/footer.php';
 ?>
-</body>
-
-</html>

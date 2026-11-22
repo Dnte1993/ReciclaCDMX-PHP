@@ -12,9 +12,9 @@
             
             <div class="footer-col">
                 <strong class="titulo-naranja">Sitios relacionados</strong>
-                <p><a href="#">Agencia Digital de Innovación Pública.</a></p>
+                <p><a href="https://adip.cdmx.gob.mx/" target="_blank" rel="noopener noreferrer">Agencia Digital de Innovación Pública</a></p>
                 <strong class="titulo-naranja">Transparencia</strong>
-                <p><a href="#">Ir al portal de transparencia</a></p>
+                <p><a href="https://transparencia.cdmx.gob.mx/" target="_blank" rel="noopener noreferrer">Ir al portal de transparencia</a></p>
             </div>
         </div>
         
