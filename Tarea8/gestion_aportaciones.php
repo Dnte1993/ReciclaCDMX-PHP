@@ -13,11 +13,12 @@
 
     require_once 'includes/funciones.php';
 
+    // 1. Declaración de variables iniciales antes del HTML
     $mensajeExito = "";
     $mensajeError = "";
     $estadosPermitidos = ["Pendiente", "Validado", "Rechazado"];
 
-    // 1. Procesar la actualización del estado de una aportación mediante POST y consulta preparada UPDATE
+    // 2. Procesar la actualización del estado de una aportación mediante POST y consulta preparada UPDATE
     if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["id_aportacion"], $_POST["nuevo_estado"])) {
         $idAportacion = (int) $_POST["id_aportacion"];
         $nuevoEstado = trim($_POST["nuevo_estado"]);
@@ -25,7 +26,6 @@
         if ($idAportacion <= 0 || !in_array($nuevoEstado, $estadosPermitidos, true)) {
             $mensajeError = "Datos inválidos para actualizar el registro seleccionado.";
         } else {
-            // Consulta preparada con UPDATE para modificar el estado del registro identificado
             $stmtUpdate = mysqli_prepare($conexion, "UPDATE aportaciones SET estado = ? WHERE id_aportacion = ?");
             mysqli_stmt_bind_param($stmtUpdate, "si", $nuevoEstado, $idAportacion);
 
@@ -38,12 +38,16 @@
         }
     }
 
-    // 2. Recuperar mediante SELECT todas las aportaciones junto con los datos del usuario relacionado
+    // 3. Recuperar todas las aportaciones uniendo usuarios, materiales y centros_acopio mediante INNER JOIN
     $listaAportaciones = [];
-    $sqlConsultaGeneral = "SELECT a.id_aportacion, a.tipo_material, a.cantidad_kg, a.fecha_recoleccion, a.estado, 
-                                  u.id_usuario, u.nombre AS nombre_usuario, u.correo AS correo_usuario
+    $sqlConsultaGeneral = "SELECT a.id_aportacion, a.cantidad_kg, a.fecha_recoleccion, a.estado,
+                                  u.id_usuario, u.nombre AS nombre_usuario, u.correo AS correo_usuario,
+                                  m.nombre AS nombre_material,
+                                  c.nombre AS nombre_centro, c.alcaldia
                            FROM aportaciones a
                            INNER JOIN usuarios u ON a.id_usuario = u.id_usuario
+                           INNER JOIN materiales m ON a.id_material = m.id_material
+                           INNER JOIN centros_acopio c ON a.id_centro = c.id_centro
                            ORDER BY a.fecha_recoleccion DESC, a.id_aportacion DESC";
 
     $stmtSelectAll = mysqli_prepare($conexion, $sqlConsultaGeneral);
@@ -55,7 +59,7 @@
     }
     mysqli_stmt_close($stmtSelectAll);
 
-    // Incluir encabezado visual
+    // 4. Incluir encabezado visual
     include 'includes/header.php';
 ?>
 
@@ -80,6 +84,7 @@
                                 <th style="padding: 10px; border: 1px solid #ddd;">Ciudadano</th>
                                 <th style="padding: 10px; border: 1px solid #ddd;">Correo</th>
                                 <th style="padding: 10px; border: 1px solid #ddd;">Material</th>
+                                <th style="padding: 10px; border: 1px solid #ddd;">Centro de Acopio</th>
                                 <th style="padding: 10px; border: 1px solid #ddd;">Cantidad (kg)</th>
                                 <th style="padding: 10px; border: 1px solid #ddd;">Fecha</th>
                                 <th style="padding: 10px; border: 1px solid #ddd;">Estado Actual</th>
@@ -99,8 +104,9 @@
                                     <td style="padding: 10px; border: 1px solid #ddd;">#<?php echo (int) $registro['id_aportacion']; ?></td>
                                     <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;"><?php echo htmlspecialchars($registro['nombre_usuario']); ?></td>
                                     <td style="padding: 10px; border: 1px solid #ddd;"><?php echo htmlspecialchars($registro['correo_usuario']); ?></td>
-                                    <td style="padding: 10px; border: 1px solid #ddd;"><?php echo htmlspecialchars($registro['tipo_material']); ?></td>
-                                    <td style="padding: 10px; border: 1px solid #ddd;"><?php echo number_format((float)$registro['cantidad_kg'], 2); ?> kg</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd;"><?php echo htmlspecialchars($registro['nombre_material']); ?></td>
+                                    <td style="padding: 10px; border: 1px solid #ddd;"><?php echo htmlspecialchars($registro['alcaldia'] . " - " . $registro['nombre_centro']); ?></td>
+                                    <td style="padding: 10px; border: 1px solid #ddd;"><?php echo number_format((float) $registro['cantidad_kg'], 2); ?> kg</td>
                                     <td style="padding: 10px; border: 1px solid #ddd;"><?php echo htmlspecialchars($registro['fecha_recoleccion']); ?></td>
                                     <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold; color: <?php echo $colorEstado; ?>;">
                                         <?php echo htmlspecialchars($registro['estado']); ?>
@@ -130,6 +136,6 @@
     </main>
 
 <?php
-    // Incluir pie de página
+    // 5. Incluir pie de página
     include 'includes/footer.php';
 ?>

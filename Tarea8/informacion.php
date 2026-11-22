@@ -1,38 +1,47 @@
 <?php
-    // Reutilización de código: Se incluye el archivo de funciones propias
+    // 1. Incluir conexión a MySQL y funciones propias
+    require_once 'includes/conexion.php';
     require_once 'includes/funciones.php';
 
-    // 1. Declaracion de las variables para la seccion de informacion
+    // 2. Declaración de variables iniciales antes del HTML
     $tituloInformacion = "¿Qué materiales reciclamos?";
     $descripcionBasica = "En nuestra plataforma encontrarás información sobre los principales materiales que se pueden reciclar en la CDMX y la forma correcta de acopiarlos. Búscalo en nuestro catálogo:";
-    $campanaActiva = true; 
-    
+    $campanaActiva = true;
+
     $busqueda = "";
     $mensajeResultado = "";
     $materialEncontrado = null;
-    $imagenEncontrada = "";
 
-    // Invocamos la Función 4 para cargar el arreglo desde el archivo centralizado
-    $catalogoMateriales = obtenerCatalogoMateriales();
+    // Cargar el catálogo completo de materiales desde MySQL
+    $catalogoMateriales = obtenerCatalogoMateriales($conexion);
 
-    // 2. Procesamiento de busqueda con GET
+    // 3. Procesamiento de búsqueda con GET mediante consulta preparada en MySQL
     if (isset($_GET["buscar"])) {
-        $busqueda = htmlspecialchars(trim($_GET["buscar"]));
-        
+        $busqueda = trim($_GET["buscar"]);
+
         if (!empty($busqueda)) {
-            // Validamos si el material existe como clave principal en el arreglo
-            if (isset($catalogoMateriales[$busqueda])) {
-                $materialEncontrado = $catalogoMateriales[$busqueda]["descripcion"];
-                $imagenEncontrada = $catalogoMateriales[$busqueda]["imagen"];
+            $sqlBuscar = "SELECT id_material, nombre, descripcion, imagen
+                          FROM materiales
+                          WHERE nombre = ?
+                          LIMIT 1";
+
+            $stmtBuscar = mysqli_prepare($conexion, $sqlBuscar);
+            mysqli_stmt_bind_param($stmtBuscar, "s", $busqueda);
+            mysqli_stmt_execute($stmtBuscar);
+            $resultadoBuscar = mysqli_stmt_get_result($stmtBuscar);
+
+            if ($filaMaterial = mysqli_fetch_assoc($resultadoBuscar)) {
+                $materialEncontrado = $filaMaterial;
             } else {
-                $mensajeResultado = "No encontramos información para el material: " . $busqueda;
+                $mensajeResultado = "No encontramos información para el material: " . htmlspecialchars($busqueda);
             }
+            mysqli_stmt_close($stmtBuscar);
         } else {
             $mensajeResultado = "Por favor, ingresa el nombre de un material para buscar.";
         }
     }
 
-    // Reutilización de código: Se incluye el encabezado
+    // 4. Incluir encabezado
     include 'includes/header.php';
 ?>
 
@@ -40,16 +49,16 @@
         <!-- Primer bloque: Presentación y Buscador GET -->
         <section>
             <h2 style="display: flex; align-items: center; justify-content: space-between;">
-                <span><?php echo $tituloInformacion; ?></span>
+                <span><?php echo htmlspecialchars($tituloInformacion); ?></span>
                 <img src="img/informacion.jpg" alt="Materiales reciclables CDMX" style="height: 60px; width: auto; object-fit: contain; border-radius: 8px;">
             </h2>
 
-            <p><?php echo $descripcionBasica; ?></p>
+            <p><?php echo htmlspecialchars($descripcionBasica); ?></p>
             
             <!-- Formulario HTML con método GET -->
             <form action="informacion.php" method="GET" style="margin: 20px 0; padding: 15px; background-color: #f5f5f5; border-radius: 8px; border-left: 4px solid #E65100;">
-                <label for="buscar" style="font-weight: bold;">Buscar material (Escribe correctamente como esta en el catalogo):</label><br><br>
-                <input type="text" id="buscar" name="buscar" value="<?php echo $busqueda; ?>" placeholder="Ingresa el material..." style="padding: 8px; width: 60%; max-width: 300px;">
+                <label for="buscar" style="font-weight: bold;">Buscar material (Ej. PET, Cartón, Vidrio, Aluminio):</label><br><br>
+                <input type="text" id="buscar" name="buscar" value="<?php echo htmlspecialchars($busqueda); ?>" placeholder="Ingresa el material..." style="padding: 8px; width: 60%; max-width: 300px;">
                 <button type="submit" style="padding: 8px 15px; background-color: #E65100; color: white; border: none; border-radius: 4px; cursor: pointer;">Buscar</button>
             </form>
         </section>
@@ -58,12 +67,11 @@
         <section>
             <?php if ($materialEncontrado !== null) { ?>
                 <div style="background-color: #e8f5e9; padding: 15px; border-left: 5px solid #2e7d32; border-radius: 4px; text-align: center;">
-                    <h3 style="color: #2e7d32; margin-top: 0;">Resultado encontrado para: <?php echo $busqueda; ?></h3>
-                    <img src="<?php echo $imagenEncontrada; ?>" alt="<?php echo $busqueda; ?>" style="width: 150px; height: 150px; object-fit: cover; border-radius: 8px; margin: 15px 0;">
-                    <p style="text-align: left;"><?php echo $materialEncontrado; ?></p>
+                    <h3 style="color: #2e7d32; margin-top: 0;">Resultado encontrado para: <?php echo htmlspecialchars($materialEncontrado["nombre"]); ?></h3>
+                    <img src="<?php echo htmlspecialchars($materialEncontrado["imagen"]); ?>" alt="<?php echo htmlspecialchars($materialEncontrado["nombre"]); ?>" style="width: 150px; height: 150px; object-fit: cover; border-radius: 8px; margin: 15px 0;">
+                    <p style="text-align: left;"><?php echo htmlspecialchars($materialEncontrado["descripcion"]); ?></p>
                 </div>
             <?php } else { 
-                // Uso de la función propia para imprimir alertas
                 echo mostrarMensaje($mensajeResultado, 'error');
             } ?>
         </section>
@@ -72,8 +80,8 @@
         <section>
             <h3>Catálogo Completo</h3>
             <ul>
-                <?php foreach ($catalogoMateriales as $nombre => $datos) { ?>
-                    <li><strong><?php echo $nombre; ?></strong></li>
+                <?php foreach ($catalogoMateriales as $material) { ?>
+                    <li><strong><?php echo htmlspecialchars($material["nombre"]); ?></strong></li>
                 <?php } ?>
             </ul>
 
@@ -90,6 +98,6 @@
     </main>
 
 <?php
-    // Reutilización de código: Se incluye el pie de página
+    // 5. Incluir pie de página
     include 'includes/footer.php';
 ?>
