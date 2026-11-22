@@ -18,23 +18,47 @@
     $mensajeError = "";
     $estadosPermitidos = ["Pendiente", "Validado", "Rechazado"];
 
-    // 2. Procesar la actualización del estado de una aportación mediante POST y consulta preparada UPDATE
-    if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["id_aportacion"], $_POST["nuevo_estado"])) {
-        $idAportacion = (int) $_POST["id_aportacion"];
-        $nuevoEstado = trim($_POST["nuevo_estado"]);
+    // 2. Procesar peticiones POST del administrador (UPDATE de estado o DELETE de registro)
+    if ($_SERVER["REQUEST_METHOD"] === "POST") {
+        $accion = trim($_POST["accion"] ?? "");
+        $idAportacion = (int) ($_POST["id_aportacion"] ?? 0);
 
-        if ($idAportacion <= 0 || !in_array($nuevoEstado, $estadosPermitidos, true)) {
-            $mensajeError = "Datos inválidos para actualizar el registro seleccionado.";
-        } else {
-            $stmtUpdate = mysqli_prepare($conexion, "UPDATE aportaciones SET estado = ? WHERE id_aportacion = ?");
-            mysqli_stmt_bind_param($stmtUpdate, "si", $nuevoEstado, $idAportacion);
+        if ($accion === "actualizar" && isset($_POST["nuevo_estado"])) {
+            $nuevoEstado = trim($_POST["nuevo_estado"]);
 
-            if (mysqli_stmt_execute($stmtUpdate)) {
-                $mensajeExito = "El estado de la aportación #" . $idAportacion . " se actualizó correctamente a '" . htmlspecialchars($nuevoEstado) . "'.";
+            if ($idAportacion <= 0 || !in_array($nuevoEstado, $estadosPermitidos, true)) {
+                $mensajeError = "Datos inválidos para actualizar el registro seleccionado.";
             } else {
-                $mensajeError = "Ocurrió un error al intentar actualizar el estado en la base de datos.";
+                // Consulta preparada UPDATE para cambiar el estado de validación
+                $stmtUpdate = mysqli_prepare($conexion, "UPDATE aportaciones SET estado = ? WHERE id_aportacion = ?");
+                mysqli_stmt_bind_param($stmtUpdate, "si", $nuevoEstado, $idAportacion);
+
+                if (mysqli_stmt_execute($stmtUpdate)) {
+                    $mensajeExito = "El estado de la aportación #" . $idAportacion . " se actualizó correctamente a '" . htmlspecialchars($nuevoEstado) . "'.";
+                } else {
+                    $mensajeError = "Ocurrió un error al intentar actualizar el estado en la base de datos.";
+                }
+                mysqli_stmt_close($stmtUpdate);
             }
-            mysqli_stmt_close($stmtUpdate);
+        } elseif ($accion === "eliminar") {
+            if ($idAportacion <= 0) {
+                $mensajeError = "No se pudo identificar correctamente la aportación que deseas eliminar.";
+            } else {
+                // Consulta preparada DELETE para eliminar permanentemente el registro seleccionado
+                $stmtDelete = mysqli_prepare($conexion, "DELETE FROM aportaciones WHERE id_aportacion = ?");
+                mysqli_stmt_bind_param($stmtDelete, "i", $idAportacion);
+
+                if (mysqli_stmt_execute($stmtDelete)) {
+                    if (mysqli_stmt_affected_rows($stmtDelete) > 0) {
+                        $mensajeExito = "La aportación #" . $idAportacion . " fue eliminada correctamente de la base de datos.";
+                    } else {
+                        $mensajeError = "La aportación #" . $idAportacion . " no existe o ya había sido eliminada.";
+                    }
+                } else {
+                    $mensajeError = "Ocurrió un error al intentar eliminar la aportación en la base de datos.";
+                }
+                mysqli_stmt_close($stmtDelete);
+            }
         }
     }
 
@@ -66,7 +90,7 @@
     <main>
         <section>
             <h2>Panel de Administración: Gestión de Aportaciones</h2>
-            <p>Consulta los registros de reciclaje de todos los ciudadanos y actualiza su estado de validación.</p>
+            <p>Consulta los registros de reciclaje de todos los ciudadanos, actualiza su estado de validación o elimina registros cuando sea necesario.</p>
 
             <?php 
                 echo mostrarMensaje($mensajeError, 'error');
@@ -89,6 +113,7 @@
                                 <th style="padding: 10px; border: 1px solid #ddd;">Fecha</th>
                                 <th style="padding: 10px; border: 1px solid #ddd;">Estado Actual</th>
                                 <th style="padding: 10px; border: 1px solid #ddd;">Actualizar Estado</th>
+                                <th style="padding: 10px; border: 1px solid #ddd;">Eliminar</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -113,6 +138,7 @@
                                     </td>
                                     <td style="padding: 10px; border: 1px solid #ddd;">
                                         <form action="gestion_aportaciones.php" method="POST" style="display: flex; gap: 8px; align-items: center; margin: 0;">
+                                            <input type="hidden" name="accion" value="actualizar">
                                             <input type="hidden" name="id_aportacion" value="<?php echo (int) $registro['id_aportacion']; ?>">
                                             <select name="nuevo_estado" style="padding: 6px; border-radius: 4px; border: 1px solid #ccc;">
                                                 <?php foreach ($estadosPermitidos as $estadoOpcion) { ?>
@@ -123,6 +149,15 @@
                                             </select>
                                             <button type="submit" style="padding: 6px 12px; background-color: #E65100; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">
                                                 Guardar
+                                            </button>
+                                        </form>
+                                    </td>
+                                    <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">
+                                        <form action="gestion_aportaciones.php" method="POST" style="margin: 0;" onsubmit="return confirm('¿Seguro que deseas eliminar permanentemente la aportación #<?php echo (int) $registro['id_aportacion']; ?>?');">
+                                            <input type="hidden" name="accion" value="eliminar">
+                                            <input type="hidden" name="id_aportacion" value="<?php echo (int) $registro['id_aportacion']; ?>">
+                                            <button type="submit" style="padding: 6px 12px; background-color: #c62828; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">
+                                                Eliminar
                                             </button>
                                         </form>
                                     </td>
