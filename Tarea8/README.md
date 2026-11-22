@@ -28,7 +28,7 @@ Versión final (`1.0.0`) del portal web **ReciclaCDMX**. En esta entrega se cons
   - `README.md`
 
 ## Enlaces del Proyecto
-- **Repositorio en GitHub:** [Ver repositorio en GitHub](https://github.com/d2wars/ProgramacionWeb)
+- **Repositorio en GitHub:** [Ver repositorio en GitHub](https://github.com/Dnte1993/ReciclaCDMX-PHP)
 
 ## Requisitos
 - Servidor local con Apache y MySQL (ej. XAMPP).
