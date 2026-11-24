@@ -159,3 +159,68 @@ footer {
     text-align: center;
     padding: 1rem 0;
 }
+
+/* Panel administrativo ancho (gestion_aportaciones.php) */
+main.main-ancho {
+    max-width: 1350px;
+    width: 95%;
+    box-sizing: border-box;
+}
+
+.tabla-contenedor {
+    overflow-x: auto;
+    margin-top: 20px;
+}
+
+.tabla-admin {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    font-size: 0.9rem;
+}
+
+.tabla-admin th,
+.tabla-admin td {
+    padding: 8px 10px;
+    border: 1px solid #ddd;
+    vertical-align: middle;
+}
+
+.tabla-admin thead tr {
+    background-color: #E65100;
+    color: white;
+    text-align: left;
+}
+
+.tabla-admin .col-nowrap {
+    white-space: nowrap;
+}
+
+.tabla-admin .form-inline {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    margin: 0;
+}
+
+.tabla-admin select {
+    padding: 6px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 0.88rem;
+}
+
+.tabla-admin button {
+    margin-top: 0;
+    padding: 6px 10px;
+    font-size: 0.88rem;
+    white-space: nowrap;
+}
+
+.tabla-admin button.btn-eliminar {
+    background-color: #c62828;
+}
+
+.tabla-admin button.btn-eliminar:hover {
+    background-color: #8e0000;
+}

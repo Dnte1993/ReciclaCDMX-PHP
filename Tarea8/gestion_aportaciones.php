@@ -87,7 +87,7 @@
     include 'includes/header.php';
 ?>
 
-    <main>
+   <main class="main-ancho">
         <section>
             <h2>Panel de Administración: Gestión de Aportaciones</h2>
             <p>Consulta los registros de reciclaje de todos los ciudadanos, actualiza su estado de validación o elimina registros cuando sea necesario.</p>
@@ -100,20 +100,20 @@
             <?php if (count($listaAportaciones) === 0) { ?>
                 <p style="padding: 15px; background-color: #fff3e0; border-left: 4px solid #E65100;">No existen aportaciones registradas en el sistema por el momento.</p>
             <?php } else { ?>
-                <div style="overflow-x: auto; margin-top: 20px;">
-                    <table style="width: 100%; border-collapse: collapse; background-color: white;">
+                <div class="tabla-contenedor">
+                    <table class="tabla-admin">
                         <thead>
-                            <tr style="background-color: #E65100; color: white; text-align: left;">
-                                <th style="padding: 10px; border: 1px solid #ddd;">ID</th>
-                                <th style="padding: 10px; border: 1px solid #ddd;">Ciudadano</th>
-                                <th style="padding: 10px; border: 1px solid #ddd;">Correo</th>
-                                <th style="padding: 10px; border: 1px solid #ddd;">Material</th>
-                                <th style="padding: 10px; border: 1px solid #ddd;">Centro de Acopio</th>
-                                <th style="padding: 10px; border: 1px solid #ddd;">Cantidad (kg)</th>
-                                <th style="padding: 10px; border: 1px solid #ddd;">Fecha</th>
-                                <th style="padding: 10px; border: 1px solid #ddd;">Estado Actual</th>
-                                <th style="padding: 10px; border: 1px solid #ddd;">Actualizar Estado</th>
-                                <th style="padding: 10px; border: 1px solid #ddd;">Eliminar</th>
+                            <tr>
+                                <th>ID</th>
+                                <th>Ciudadano</th>
+                                <th>Correo</th>
+                                <th>Material</th>
+                                <th>Centro de Acopio</th>
+                                <th>Cantidad (kg)</th>
+                                <th>Fecha</th>
+                                <th>Estado Actual</th>
+                                <th>Actualizar Estado</th>
+                                <th>Eliminar</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -126,39 +126,35 @@
                                 }
                             ?>
                                 <tr>
-                                    <td style="padding: 10px; border: 1px solid #ddd;">#<?php echo (int) $registro['id_aportacion']; ?></td>
-                                    <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;"><?php echo htmlspecialchars($registro['nombre_usuario']); ?></td>
-                                    <td style="padding: 10px; border: 1px solid #ddd;"><?php echo htmlspecialchars($registro['correo_usuario']); ?></td>
-                                    <td style="padding: 10px; border: 1px solid #ddd;"><?php echo htmlspecialchars($registro['nombre_material']); ?></td>
-                                    <td style="padding: 10px; border: 1px solid #ddd;"><?php echo htmlspecialchars($registro['alcaldia'] . " - " . $registro['nombre_centro']); ?></td>
-                                    <td style="padding: 10px; border: 1px solid #ddd;"><?php echo number_format((float) $registro['cantidad_kg'], 2); ?> kg</td>
-                                    <td style="padding: 10px; border: 1px solid #ddd;"><?php echo htmlspecialchars($registro['fecha_recoleccion']); ?></td>
-                                    <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold; color: <?php echo $colorEstado; ?>;">
+                                    <td class="col-nowrap">#<?php echo (int) $registro['id_aportacion']; ?></td>
+                                    <td style="font-weight: bold;"><?php echo htmlspecialchars($registro['nombre_usuario']); ?></td>
+                                    <td><?php echo htmlspecialchars($registro['correo_usuario']); ?></td>
+                                    <td class="col-nowrap"><?php echo htmlspecialchars($registro['nombre_material']); ?></td>
+                                    <td><?php echo htmlspecialchars($registro['alcaldia'] . " - " . $registro['nombre_centro']); ?></td>
+                                    <td class="col-nowrap"><?php echo number_format((float) $registro['cantidad_kg'], 2); ?> kg</td>
+                                    <td class="col-nowrap"><?php echo htmlspecialchars($registro['fecha_recoleccion']); ?></td>
+                                    <td class="col-nowrap" style="font-weight: bold; color: <?php echo $colorEstado; ?>;">
                                         <?php echo htmlspecialchars($registro['estado']); ?>
                                     </td>
-                                    <td style="padding: 10px; border: 1px solid #ddd;">
-                                        <form action="gestion_aportaciones.php" method="POST" style="display: flex; gap: 8px; align-items: center; margin: 0;">
+                                    <td>
+                                        <form action="gestion_aportaciones.php" method="POST" class="form-inline">
                                             <input type="hidden" name="accion" value="actualizar">
                                             <input type="hidden" name="id_aportacion" value="<?php echo (int) $registro['id_aportacion']; ?>">
-                                            <select name="nuevo_estado" style="padding: 6px; border-radius: 4px; border: 1px solid #ccc;">
+                                            <select name="nuevo_estado">
                                                 <?php foreach ($estadosPermitidos as $estadoOpcion) { ?>
                                                     <option value="<?php echo $estadoOpcion; ?>" <?php echo ($registro['estado'] === $estadoOpcion) ? 'selected' : ''; ?>>
                                                         <?php echo $estadoOpcion; ?>
                                                     </option>
                                                 <?php } ?>
                                             </select>
-                                            <button type="submit" style="padding: 6px 12px; background-color: #E65100; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">
-                                                Guardar
-                                            </button>
+                                            <button type="submit">Guardar</button>
                                         </form>
                                     </td>
-                                    <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">
+                                    <td style="text-align: center;">
                                         <form action="gestion_aportaciones.php" method="POST" style="margin: 0;" onsubmit="return confirm('¿Seguro que deseas eliminar permanentemente la aportación #<?php echo (int) $registro['id_aportacion']; ?>?');">
                                             <input type="hidden" name="accion" value="eliminar">
                                             <input type="hidden" name="id_aportacion" value="<?php echo (int) $registro['id_aportacion']; ?>">
-                                            <button type="submit" style="padding: 6px 12px; background-color: #c62828; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">
-                                                Eliminar
-                                            </button>
+                                            <button type="submit" class="btn-eliminar">Eliminar</button>
                                         </form>
                                     </td>
                                 </tr>

@@ -14,7 +14,7 @@ if (session_status() === PHP_SESSION_NONE) {
 </head>
 <body>
     <header>
-        <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="display: flex; justify-content: space-between; align-items: center; gap: 18px;">
             <h1 style="margin: 0;">ReciclaCDMX</h1>
             
             <!-- Panel de navegación condicional según sesión -->
